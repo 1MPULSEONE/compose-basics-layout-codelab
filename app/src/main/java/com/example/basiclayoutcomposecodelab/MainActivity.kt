@@ -82,6 +82,35 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun FavoriteCollectionCard(
+        @DrawableRes drawable: Int,
+        @StringRes string: Int,
+        modifier: Modifier = Modifier
+    ) {
+        Surface(
+            shape = MaterialTheme.shapes.small,
+            modifier = modifier
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.width(192.dp)
+            ) {
+                Image(
+                    painter = painterResource(drawable),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(56.dp)
+                )
+                Text(
+                    text = stringResource(string),
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+            }
+        }
+    }
+
+
     @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
     @Composable
     fun PreviewSearchBar() {
@@ -92,6 +121,16 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun PreviewAlignYourBodyElement() {
         AlignYourBodyElement(Modifier, R.drawable.ab1_inversions, R.string.inversions)
+    }
+
+    @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+    @Composable
+    fun PreviewFavoriteCollectionCard() {
+        FavoriteCollectionCard(
+            R.drawable.fc2_nature_meditations,
+            R.string.nature_meditations,
+            Modifier.padding(8.dp)
+        )
     }
 }
 
