@@ -8,6 +8,9 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -23,7 +26,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.basiclayoutcomposecodelab.models.AlignYourBodyModel
+import com.example.basiclayoutcomposecodelab.models.FavoriteCollectionCardModel
 import com.example.basiclayoutcomposecodelab.repository.AlignYourBodyElementRepository
+import com.example.basiclayoutcomposecodelab.repository.FavoriteCollectionCardRepository
 import com.example.basiclayoutcomposecodelab.ui.theme.BasicLayoutComposeCodelabTheme
 import com.example.basiclayoutcomposecodelab.ui.theme.rust600
 
@@ -31,7 +36,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BasicLayoutComposeCodelabTheme {}
+            BasicLayoutComposeCodelabTheme {
+                FavoriteCollectionsGrid(
+                    Modifier,
+                    FavoriteCollectionCardRepository().getAllFavoriteCollectionCards()
+                )
+            }
         }
     }
 
@@ -108,7 +118,8 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun AlignYourBodyRow(
-        modifier: Modifier = Modifier, alignYourBodyData: List<AlignYourBodyModel>
+        modifier: Modifier = Modifier,
+        alignYourBodyData: List<AlignYourBodyModel>
     ) {
         LazyRow(
             modifier = modifier,
@@ -121,6 +132,23 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun FavoriteCollectionsGrid(
+        modifier: Modifier = Modifier,
+        favoriteCollectionData: List<FavoriteCollectionCardModel>
+    ) {
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(2),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = modifier.height(120.dp)
+        ) {
+            items(favoriteCollectionData) { item ->
+                FavoriteCollectionCard(item.imageId, item.text)
+            }
+        }
+    }
 
     @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
     @Composable
@@ -152,6 +180,15 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun PreviewAlignYourBodyRow() {
         AlignYourBodyRow(Modifier, AlignYourBodyElementRepository().getAllAlignYourBodyElements())
+    }
+
+    @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+    @Composable
+    fun PreviewFavoriteCollectionsGrid() {
+        FavoriteCollectionsGrid(
+            Modifier,
+            FavoriteCollectionCardRepository().getAllFavoriteCollectionCards(),
+        )
     }
 }
 
