@@ -36,12 +36,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BasicLayoutComposeCodelabTheme {
-                FavoriteCollectionsGrid(
-                    Modifier,
-                    FavoriteCollectionCardRepository().getAllFavoriteCollectionCards()
-                )
-            }
+            BasicLayoutComposeCodelabTheme {}
         }
     }
 
