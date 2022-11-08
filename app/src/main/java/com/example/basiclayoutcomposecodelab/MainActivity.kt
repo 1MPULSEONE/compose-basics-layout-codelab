@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -211,6 +213,41 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    private fun BLCCBottomNavigation(modifier: Modifier = Modifier) {
+        BottomNavigation(
+            modifier,
+        ) {
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Home,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(stringResource(R.string.home).uppercase())
+                },
+                selected = true,
+                onClick = {}
+            )
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(stringResource(R.string.profile).uppercase())
+                },
+                selected = false,
+                onClick = {}
+            )
+        }
+    }
+
+
     @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
     @Composable
     fun PreviewFavoriteCollectionCard() {
@@ -250,6 +287,14 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun PreviewHomeScreen() {
         HomeScreen()
+    }
+
+    @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+    @Composable
+    fun PreviewBLCCBottomNavigation() {
+        BasicLayoutComposeCodelabTheme {
+            BLCCBottomNavigation(Modifier.padding(top = 24.dp))
+        }
     }
 }
 

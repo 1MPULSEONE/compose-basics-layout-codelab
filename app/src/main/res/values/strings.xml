@@ -15,4 +15,6 @@
     <string name="nightly_wind_down">Nightly wind down</string>
     <string name="align_your_body">Align your body</string>
     <string name="favorite_collections">Favorite collections</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
 </resources>
