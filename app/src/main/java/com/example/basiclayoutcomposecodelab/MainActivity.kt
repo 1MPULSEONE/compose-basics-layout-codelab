@@ -113,8 +113,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun AlignYourBodyRow(
-        modifier: Modifier = Modifier,
-        alignYourBodyData: List<AlignYourBodyModel>
+        modifier: Modifier = Modifier, alignYourBodyData: List<AlignYourBodyModel>
     ) {
         LazyRow(
             modifier = modifier,
@@ -129,8 +128,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun FavoriteCollectionsGrid(
-        modifier: Modifier = Modifier,
-        favoriteCollectionData: List<FavoriteCollectionCardModel>
+        modifier: Modifier = Modifier, favoriteCollectionData: List<FavoriteCollectionCardModel>
     ) {
         LazyHorizontalGrid(
             rows = GridCells.Fixed(2),
@@ -163,6 +161,25 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun HomeSection(
+        @StringRes titleId: Int,
+        modifier: Modifier = Modifier,
+        content: @Composable () -> Unit
+    ) {
+        Column(modifier) {
+            Text(
+                stringResource(titleId).uppercase(),
+                style = MaterialTheme.typography.h6,
+                color = rust600,
+                modifier = Modifier
+                    .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
+                    .padding(horizontal = 8.dp)
+            )
+            content()
+        }
+    }
+
     @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
     @Composable
     fun PreviewFavoriteCollectionCard() {
@@ -184,6 +201,18 @@ class MainActivity : ComponentActivity() {
             Modifier,
             FavoriteCollectionCardRepository().getAllFavoriteCollectionCards(),
         )
+    }
+
+    @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+    @Composable
+    fun PreviewHomeSection() {
+        HomeSection(R.string.align_your_body) {
+            BasicLayoutComposeCodelabTheme {
+                AlignYourBodyRow(
+                    Modifier, AlignYourBodyElementRepository().getAllAlignYourBodyElements()
+                )
+            }
+        }
     }
 }
 
