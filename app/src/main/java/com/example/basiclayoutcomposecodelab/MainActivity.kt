@@ -48,9 +48,18 @@ class MainActivity : ComponentActivity() {
                         .fillMaxHeight(),
                     color = taupe100
                 ) {
-                    HomeScreen()
+                    MySootheApp()
                 }
             }
+        }
+    }
+
+    @Composable
+    fun MySootheApp() {
+        Scaffold(
+            bottomBar = { BLCCBottomNavigation() }
+        ) { padding ->
+            HomeScreen(Modifier.padding(padding))
         }
     }
 
@@ -109,13 +118,15 @@ class MainActivity : ComponentActivity() {
             shape = MaterialTheme.shapes.small, modifier = modifier
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically, modifier = Modifier.width(192.dp)
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .width(200.dp)
             ) {
                 Image(
                     painter = painterResource(drawable),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(56.dp)
+                    modifier = Modifier.size(76.dp)
                 )
                 Text(
                     text = stringResource(string), modifier = Modifier.padding(horizontal = 8.dp)
@@ -148,7 +159,7 @@ class MainActivity : ComponentActivity() {
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = modifier.height(120.dp)
+            modifier = modifier.height(160.dp)
         ) {
             items(favoriteCollectionData) { item ->
                 FavoriteCollectionCard(item.imageId, item.text)
