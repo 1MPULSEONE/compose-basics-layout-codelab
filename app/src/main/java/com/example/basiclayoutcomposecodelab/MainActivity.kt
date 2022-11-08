@@ -12,7 +12,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -31,15 +33,24 @@ import com.example.basiclayoutcomposecodelab.repository.AlignYourBodyElementRepo
 import com.example.basiclayoutcomposecodelab.repository.FavoriteCollectionCardRepository
 import com.example.basiclayoutcomposecodelab.ui.theme.BasicLayoutComposeCodelabTheme
 import com.example.basiclayoutcomposecodelab.ui.theme.rust600
+import com.example.basiclayoutcomposecodelab.ui.theme.taupe100
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BasicLayoutComposeCodelabTheme {}
+            BasicLayoutComposeCodelabTheme {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    color = taupe100
+                ) {
+                    HomeScreen()
+                }
+            }
         }
     }
-
 
     @Composable
     fun SearchBar(modifier: Modifier) {
@@ -118,7 +129,7 @@ class MainActivity : ComponentActivity() {
         LazyRow(
             modifier = modifier,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)
         ) {
             items(alignYourBodyData) { item ->
                 AlignYourBodyElement(Modifier, item.imageId, item.text)
@@ -163,9 +174,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun HomeSection(
-        @StringRes titleId: Int,
-        modifier: Modifier = Modifier,
-        content: @Composable () -> Unit
+        @StringRes titleId: Int, modifier: Modifier = Modifier, content: @Composable () -> Unit
     ) {
         Column(modifier) {
             Text(
@@ -174,9 +183,31 @@ class MainActivity : ComponentActivity() {
                 color = rust600,
                 modifier = Modifier
                     .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = 16.dp)
             )
             content()
+        }
+    }
+
+    @Composable
+    fun HomeScreen(modifier: Modifier = Modifier) {
+        Column(
+            modifier
+                .verticalScroll(rememberScrollState())
+                .padding(vertical = 16.dp)
+        ) {
+            SearchBar(Modifier.padding(horizontal = 16.dp))
+            HomeSection(R.string.align_your_body) {
+                AlignYourBodyRow(
+                    Modifier, AlignYourBodyElementRepository().getAllAlignYourBodyElements()
+                )
+            }
+            HomeSection(R.string.favorite_collections) {
+                FavoriteCollectionsGrid(
+                    Modifier, FavoriteCollectionCardRepository().getAllFavoriteCollectionCards()
+                )
+            }
+            Spacer(Modifier.height(16.dp))
         }
     }
 
@@ -214,5 +245,14 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+    @Composable
+    fun PreviewHomeScreen() {
+        HomeScreen()
+    }
 }
+
+
+
 
